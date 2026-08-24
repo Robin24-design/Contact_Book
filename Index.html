@@ -1,0 +1,85 @@
+#Store contacts as a list of dictionaries, each with keys: name, phone, email
+#Implement an add_contact() function that appends a new dictionary to the list
+#Implement a search_contact(name) function that searches by name and returns the matching dictionary (or None if not found)
+#Implement a delete_contact(name) function that removes a contact by name
+#Implement a view_all() function that displays all contacts in a formatted layout
+#Use a while loop menu to let the user choose an action (1=Add, 2=Search, 3=Delete, 4=View All, 5=Exit)
+contacts = []
+
+def add_contact():
+    name = input("enter name: ")
+    phone = input("enter Phone number: ")
+    email = input("enter EmailAddress: ")
+
+    contact = {"name": name, "Phone number": phone, "EmailAddress": email}
+    contacts.append(contact)
+    print(f"Contact '{name}' added successfully!")
+def search_contact(name):
+    for contact in contacts:
+        if contact["name"].lower() == name.lower():
+            return contact
+    return None
+
+def delete_contact(name):
+    contact = search_contact(name)
+    if contact:
+        contacts.remove(contact)
+        print(f"Contact '{name}' deleted successfully")
+    else:
+        print(f"Contact '{name}' not found.")
+
+def view_all():
+    if not contacts:
+        print("No contacts to display.")
+        return
+
+    print("\n" + "="*45)
+    print(f"{'All CONTACTS':^45}")
+    print("="*45)
+    for i, contact in enumerate(contacts, 1):
+        print(f"{i}. Name : {contact['name']}")
+        print(f" Phone Number: {contact['phone']}")
+        print(f" EmailAddress: {contact['email']}")
+        print("-"*45)
+
+#main menu loop
+while True:
+    print("\n--- CONTACT BOOK MENU ---")
+    print("1. Add Contact")
+    print("2. Search Conatct")
+    print("3. Delete Contact")
+    print("4. View All Contacts")
+    print("5. Exit")
+
+    choice = input("Enter your choice (1-5): ")
+
+    if choice == "1":
+        add_contact()
+
+    elif choice == "2":
+        search_name = input("Enter name to search: ")
+        result = search_contact(search_name)
+        if result:
+            print("\n Contact Found:")
+         #
+        
+            print(f"Name : {result['name']}")
+            print(f"Phone: {result['phone']}")
+            print(f"Email: {result['email']}")
+        else:
+            print("Contact not found")
+
+    elif choice == "3":
+        del_name = input("Enter name to delete: ")
+        delete_contact(del_name)
+
+    elif choice == "4":
+        view_all()
+
+    elif choice == "5":
+        print("Exiting Contact Book. Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please enter 1-5.")
+
